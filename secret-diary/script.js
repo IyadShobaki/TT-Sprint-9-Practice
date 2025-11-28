@@ -14,7 +14,18 @@ function addPostToDOM(container, markup) {
 }
 
 function getPosts() {
-  // write your code here
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((post) => {
+        const container = document.querySelector(".container");
+
+        addPostToDOM(container, createPostMarkup(post));
+      });
+    })
+    .catch((err) => {
+      console.error("Error. The request failed: ", err);
+    });
 }
 
 getPosts();

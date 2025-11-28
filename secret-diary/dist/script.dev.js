@@ -10,7 +10,17 @@ function addPostToDOM(container, markup) {
   container.insertAdjacentHTML("afterbegin", markup);
 }
 
-function getPosts() {// write your code here
+function getPosts() {
+  fetch("https://jsonplaceholder.typicode.com/posts").then(function (res) {
+    return res.json();
+  }).then(function (data) {
+    data.forEach(function (post) {
+      var container = document.querySelector(".container");
+      addPostToDOM(container, createPostMarkup(post));
+    });
+  })["catch"](function (err) {
+    console.error("Error. The request failed: ", err);
+  });
 }
 
 getPosts();
